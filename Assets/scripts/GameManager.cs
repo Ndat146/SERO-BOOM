@@ -47,6 +47,10 @@ public class GameManager : MonoBehaviour
     public LayerMask cantMoveLayer;
     public LayerMask obstacleLayer;
 
+    [Header("Audio Settings")]
+    public AudioSource audioSource;
+    public AudioClip moveSound;  
+
     private LevelManager levelManager;
 
     void Awake()
@@ -209,6 +213,10 @@ public class GameManager : MonoBehaviour
 
     void MoveStep(Vector3 newPosition, Direction newDir, float rotationZ)
     {
+        if (audioSource != null && moveSound != null)
+        {
+            audioSource.PlayOneShot(moveSound); 
+        }
         positionHistory.Insert(0, newPosition);
         if (positionHistory.Count > bodyParts.Count + 1)
             positionHistory.RemoveAt(positionHistory.Count - 1);
